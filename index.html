@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: rgb(218, 41, 28);
+            color: rgb(255, 199, 44);
+            text-shadow: 0 0 10px rgba(255, 199, 44, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        #countdown {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 199, 44, 3);
+        }
+
+        #progress-bar-container {
+            width: 300px;
+            height: 20px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #FFC72C;
+            border-radius: 5px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #image-container {
+            margin-top: 5px;
+        }
+
+        #image-container img {
+            max-width: 30%;
+            height: auto;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out; /* Adiciona transição para suavizar a mudança de tamanho */
+        }
+
+        #image-container:hover img {
+            animation: rotate 1s linear infinite; /* Ajusta a velocidade de rotação para 1 segundo */
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Contagem Regressiva</h1>
+    <div id="countdown"></div>
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <div id="image-container">
+        <img src="mcdonalds.png" alt="Sua Imagem">
+    </div>
+
+    <script>
+        const endDate = new Date();
+        endDate.setDate(endDate.getDate() + 14);
+
+        const countdownElement = document.getElementById('countdown');
+        const progressBar = document.getElementById('progress-bar');
+
+        function updateCountdown() {
+            const now = new Date();
+            const timeDifference = endDate - now - 24 * 60 * 60 * 1000;
+
+            if (timeDifference <= 0) {
+                countdownElement.innerHTML = 'A contagem regressiva terminou!';
+                progressBar.style.width = '100%';
+            } else {
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                const progressPercentage = (1 - timeDifference / (14 * 24 * 60 * 60 * 1000)) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        updateCountdown();
+    </script>
+</body>
+</html>
+
+<!-- prompt=
+1- se possivel, crie para mim um html e um java script ja estilizado com css, uma pagina de contagem regressiva com uma barra de loading, a contagem regressiva esta limitada para daqui 14 dias.
+
+2- como posso atualizar para colocar um dia a menos na contagem regressiva ?.
+
+o resto foi somente para estilizar.
+
+prompt da animação da imagem = 
+
+1- quero que coloque uma animação de rotacionar na imagem no centro do site :
+
+2- ja no codigo principal, aumente a velocidade de rotação, e deixa a imagem apenas rotacionar quando estive com o mouse em cima
+
+3-quando estou com o mouse fora da imagem ela fica grande, quero que corrija isto e faça ele fica do mesmo tamanho o tempo inteiro
+
+4- a imagem esta girando apenas quando o mouse esta fora, quero que ela gire quando o mouse esta nela
+
+
+-->
